@@ -4,7 +4,7 @@ import { DeleteOutlined } from "@ant-design/icons";
 
 export default function Cards() {
   const context = useContext(Cartcontext);
-  // console.log(context);
+
   const getAllSum = () => {
     let sum = 0;
     context.card.forEach((element) => {
@@ -18,25 +18,25 @@ export default function Cards() {
   }
 
   return (
-    <div className="container mx-auto mt-5">
-      <div className="grid grid-cols-3 ">
-        <div className="flex flex-col gap-y-2 px-4">
+    <div className="container mx-auto mt-5 px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="flex flex-col gap-y-2">
           {context?.card?.map((product, index) => {
             return (
               <div
                 key={product?.id}
-                className="grid grid-cols-3 bg-[#f5f5f5] rounded-2xl shadow-2xl gap-6  transform transition hover:shadow-xl hover:scale-105"
+                className="grid grid-cols-1 sm:grid-cols-3 bg-[#f5f5f5] rounded-2xl shadow-2xl gap-6 p-4 transform transition hover:shadow-xl hover:scale-105"
               >
-                <div className="col-span-1">
+                <div className="flex justify-center">
                   <img
-                    className="rounded-2xl shadow-2xl flex flex-col items-center mt-5 mx-3"
+                    className="rounded-2xl shadow-2xl w-full max-w-[150px] sm:max-w-none"
                     src={product.thumbnail}
                     alt={product.name}
                   />
                 </div>
-                <div className="col-span-2 ">
-                  <p>{product.title}</p>
-                  <div className="flex items-center gap-2">
+                <div className="sm:col-span-2">
+                  <p className="text-lg font-semibold">{product.title}</p>
+                  <div className="flex items-center gap-2 my-2">
                     <button
                       className="border border-gray-300 rounded-lg py-1 px-3 active:bg-gray-400"
                       onClick={() => {
@@ -45,7 +45,7 @@ export default function Cards() {
                     >
                       -
                     </button>
-                    <span>{product?.count}</span>
+                    <span className="text-lg">{product?.count}</span>
                     <button
                       className="border border-gray-300 rounded-lg py-1 px-3 active:bg-gray-400"
                       onClick={() => {
@@ -55,10 +55,14 @@ export default function Cards() {
                       +
                     </button>
                   </div>
-                  <p>Kategoriya:{product?.category}</p>
-                  <p>Narxi:{product?.price}$</p>
+                  <p className="text-sm text-gray-600">
+                    Kategoriya: {product?.category}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Narxi: {product?.price}$
+                  </p>
                   <button
-                    className="border border-red-300 bg-red-500 hover:bg-red-400 rounded-lg py-1 px-3 mx-50 my-3 active:bg-red-400 "
+                    className="border border-red-300 bg-red-500 hover:bg-red-400 rounded-lg py-1 px-3 my-3 active:bg-red-400 text-white"
                     onClick={() => {
                       context.delet(index);
                     }}
@@ -70,10 +74,9 @@ export default function Cards() {
             );
           })}
         </div>
-        {/* <div>Buyurma uchun malumotlar</div> */}
       </div>
-      <p className="container mx-5 border w-[17%] bg-[#f5f5f5] rounded-lg  p-2 px-3 my-5 overflow-hidden shadow-lg transform transition hover:shadow-xl hover:scale-105">
-        Umumiy Summa:{getAllSum()}
+      <p className="container mx-auto md:w-1/2 lg:w-1/4 bg-[#f5f5f5] rounded-lg p-4 my-5 shadow-lg transform transition hover:shadow-xl hover:scale-105 text-lg font-semibold">
+        Umumiy Summa: {getAllSum()}$
       </p>
     </div>
   );

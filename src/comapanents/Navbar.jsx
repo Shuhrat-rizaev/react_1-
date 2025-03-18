@@ -1,39 +1,50 @@
 import { useContext, useState } from "react";
-import { Search, User, Heart, ShoppingCart } from "lucide-react";
+import { Search, User, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
 import { Cartcontext } from "../Context/CardList";
+
 export default function Navbar() {
   const { card } = useContext(Cartcontext);
-  console.log(card);
   const [language, setLanguage] = useState("O‘zbekcha");
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const toggleLanguage = () => {
     setLanguage(language === "O‘zbekcha" ? "Русский" : "O‘zbekcha");
   };
 
   return (
-    <nav className="bg-black text-white py-5 px-10 flex items-center justify-between">
-      <ul className="flex space-x-6 text-sm">
-        {/* <li className="hover:underline cursor-pointer">Сувениры</li> */}
-        <Link className="hover:underline cursor-pointer" to={`/`}>
-          {" "}
+    <nav className="bg-black text-white py-5 px-5 md:px-10 flex items-center justify-between relative">
+      <button
+        className="md:hidden text-white focus:outline-none"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        ☰
+      </button>
+      <ul
+        className={`${
+          menuOpen ? "flex" : "hidden"
+        } md:flex md:space-x-6 text-sm absolute md:relative top-16 md:top-auto left-0 w-full md:w-auto bg-black md:bg-transparent flex-col md:flex-row items-center`}
+      >
+        <Link className="hover:underline cursor-pointer py-2 md:py-0" to={`/`}>
           Bosh sahifa
         </Link>
         <Link
-          className="hover:underline cursor-pointer"
+          className="hover:underline cursor-pointer py-2 md:py-0"
           to={`/products/category-list`}
         >
-          {" "}
           Categoreis
         </Link>
-        <li className="hover:underline cursor-pointer">Электроника</li>
-        <li className="hover:underline cursor-pointer">Бренды</li>
-        <li className="hover:underline cursor-pointer">Обувь</li>
-        <li className="hover:underline cursor-pointer">Хоз. </li>
-        <li className="hover:underline cursor-pointer">Авто </li>
+        <li className="hover:underline cursor-pointer py-2 md:py-0">
+          Электроника
+        </li>
+        <li className="hover:underline cursor-pointer py-2 md:py-0">Бренды</li>
+        <li className="hover:underline cursor-pointer py-2 md:py-0">Обувь</li>
+        <li className="hover:underline cursor-pointer py-2 md:py-0">Хоз.</li>
+        <li className="hover:underline cursor-pointer py-2 md:py-0">Авто</li>
       </ul>
       <div className="flex items-center space-x-4">
-        <div className="relative">
+        <div className="relative hidden md:block">
           <input
             type="text"
             placeholder="Поиск товаров"
@@ -46,10 +57,13 @@ export default function Navbar() {
         </div>
         <User className="cursor-pointer" size={20} />
         <Heart className="cursor-pointer" size={20} />
-        {/* <ShoppingCart className="cursor-pointer" size={20} /> */}
-        <Link to={`/cards`} className="flex justify-between">
-          <FaCartShopping />
-          <sup>{card.length}</sup>
+        <Link to={`/cards`} className="flex items-center relative">
+          <FaCartShopping size={20} />
+          {card.length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
+              {card.length}
+            </span>
+          )}
         </Link>
         <div className="relative">
           <button
